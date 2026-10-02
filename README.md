@@ -5,7 +5,8 @@
 ## News
 
 **2026-10-02 — DataTab 1.5: databases, spreadsheets and conversion**
-
+### RENDER fix 1.50 
+- only rendering of tables, scrolling speed fixes, approx ~4× faster (21 → 5.5 ms per step on the xlsx)
 DataTab is no longer only a text-file viewer. Version 1.5 opens databases
 and spreadsheets in Lister, and turns any of them into CSV or JSON.
 
