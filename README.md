@@ -4,11 +4,45 @@
 
 ## News
 
-**2026-10-02 — DataTab 1.5: databases, spreadsheets and conversion**
-### RENDER fix 1.50 
-- only rendering of tables, scrolling speed fixes, approx ~4× faster (21 → 5.5 ms per step on the xlsx)
+**2026-10-19 — DataTab 1.6: SQL over any table, remembered views, faster filters**
 
-### v1.50
+- **SQL over CSV, JSON and XML.** <kbd>Ctrl+Q</kbd> reads the table on
+  screen into SQL and opens the Query tab, so `SELECT city, SUM(amount)
+  FROM orders GROUP BY city` works on a plain CSV. Columns get number or
+  text types from their values. <kbd>Ctrl+Q</kbd> again goes back to the
+  file.
+- **Each file's view is remembered.** Sort, filters, column widths,
+  hidden columns and the open table or sheet come back when the file is
+  opened again (`remember-view` in the ini).
+- **Column profile.** Rows, blanks, distinct values, number and date
+  ranges, and the ten most common values of a column; pick a value to
+  filter to it.
+- **Filter by a cell's value:** *Show only "x"* and *Hide "x"* in the
+  context menu. The new `!=` filter means "not equal", and `!=` alone
+  means "not blank".
+- **Dates sort and filter as dates.** 2.1.2025 now comes before
+  13.10.2026, and `>1.1.2026` filters by date. D.M.Y, Y-M-D, and D/M/Y or
+  M/D/Y in your Windows date order are recognized, with or without a time.
+- **Copy rows as** an HTML table (pastes as a real table into Word,
+  Outlook or Teams), a Markdown table, or SQL INSERTs. Export writes
+  HTML, Markdown and SQL files too.
+- **Go to row** with <kbd>Ctrl+G</kbd> (`120`, `120:3` or `50%`), or by
+  clicking the row count in the status bar.
+- **Thumbnails.** Total Commander's thumbnail view shows the first rows
+  of CSV, SQLite, DBF and Excel files as a small table.
+- **Printing** from Lister's File › Print: the view as you see it, or
+  only the selected rows, with the header on every page.
+- **Faster on big files.** Each character added to a filter re-tests only
+  the rows still showing, and a long filter or sort gives way as soon as
+  you type or click, so Total Commander does not freeze.
+
+Also: <kbd>Esc</kbd> closes Lister while a file is still loading;
+<kbd>PgUp</kbd> / <kbd>PgDn</kbd> / <kbd>Home</kbd> / <kbd>End</kbd> move
+the current cell; the status bar follows the dark theme; and sideways
+scrolling no longer smears cell borders.
+
+**2026-10-02 — DataTab 1.5: databases, spreadsheets and conversion**
+
 DataTab is no longer only a text-file viewer. Version 1.5 opens databases
 and spreadsheets in Lister, and turns any of them into CSV or JSON.
 
@@ -50,24 +84,6 @@ Copy, Select all and ANSI / ASCII work; DOS and other code pages are in
 the encoding menu. Every file reader was tested against millions of
 damaged files, and one `.xlsx` crash was fixed.
 
-**2026-09-29 — DataTab 1.4**
-
-- **32-bit version.** DataTab now runs in 32-bit Total Commander as well as
-  64-bit (`datatab.wlx` next to `datatab.wlx64`, one package).
-- **More file types:** YAML (`.yaml`, `.yml`, `.clang-format`,
-  `.clang-tidy`), TOML, INI (`.ini`, `.editorconfig`), Java `.properties`
-  and `.env` files. They open in the same outline as JSON, and edits keep
-  their comments and layout.
-- **Rename keys** in the outline, and **Copy node as YAML** from any format.
-- **Wildcards** (`*`, `?`) in the filter boxes.
-- **Links open** in the default browser with a double-click on the cell,
-  or from the context menu.
-- **Simpler selection,** like a spreadsheet: no striped rows or hover
-  highlight, and selected text keeps its color.
-- **The theme follows Total Commander's** light or dark mode by default.
-- A file too large for the available memory now gives a clear message
-  instead of taking Total Commander down.
-
 Full history: [version-log.md](version-log.md).
 
 ---
@@ -75,8 +91,9 @@ Full history: [version-log.md](version-log.md).
 **DataTab** is a Lister (WLX) plugin for [Total Commander](https://www.ghisler.com/)
 that turns CSV/TSV, JSON, XML, YAML, TOML, INI, `.properties` and `.env` files
 into an interactive, editable table instead of raw text. It also opens
-SQLite databases, DBF tables and Excel workbooks, runs SQL over them, and
-exports any of them to CSV, TSV or JSON. Press <kbd>F3</kbd> on a file to
+SQLite databases, DBF tables and Excel workbooks, runs SQL over them and
+over plain CSV, JSON and XML tables, and exports any of them to CSV, TSV,
+JSON, HTML, Markdown or SQL. Press <kbd>F3</kbd> on a file to
 get a spreadsheet-like grid or a structured outline, right inside Lister.
 
 It replaces three older single-format plugins (csvtab, jsontab and xmltab)
@@ -97,9 +114,16 @@ editing, theming and font handling.
   tables), DataTab can show just that list as a normal sortable, filterable
   table. The status bar tells you when one is available; <kbd>Ctrl+T</kbd>
   switches to it.
-- **Filtering:** "contains", `=` exact, `!` not, `<` / `>` comparisons, and
-  `*` / `?` wildcards. Filters either hide non-matching rows or jump to the
-  next match.
+- **Filtering:** "contains", `=` exact, `!` not, `!=` not equal (alone:
+  not blank), `<` / `>` comparisons of numbers and dates, and `*` / `?`
+  wildcards. Filters either hide non-matching rows or jump to the next
+  match. *Show only* / *Hide* in the context menu filter by a cell's value.
+- **Sorting:** natural order, with numbers first, then dates in time
+  order, then text, then blanks.
+- **Column profile:** rows, blanks, distinct values, ranges and the most
+  common values of a column; pick one to filter to it.
+- **Remembered views:** each file's sort, filters, column widths, hidden
+  columns and open table come back when it is opened again.
 - **Editing:** cells are edited in place, and saving is lossless. Only the
   values you changed are rewritten; the rest of the file stays byte for byte
   the same, so comments and layout in config files survive. Keys can be
@@ -109,6 +133,8 @@ editing, theming and font handling.
   (blobs as a hex dump in the value pane), a Schema tab with every
   CREATE statement, and a Query tab that runs your own SQL into the same
   grid. Read-only.
+- **SQL over text files:** <kbd>Ctrl+Q</kbd> loads a CSV, or a JSON / XML
+  record list, into an in-memory database and opens the Query tab on it.
 - **DBF and Excel:** dBASE / FoxPro tables and Excel worksheets show as
   database tables, so the same navigator, filters and SQL queries work on
   them. Code pages are detected, including the DOS ones (Kamenický too).
@@ -122,18 +148,28 @@ editing, theming and font handling.
   node, so converting a piece of one format into another is one copy.
 - **Themes:** nine built-in presets. The light ones are Light, Paper, Frost
   and Solarized Light; the dark ones are Dark, Midnight, Solarized Dark,
-  Nord and Monokai. By default Light or Dark is picked to match Total
-  Commander's own mode. Any individual color can be overridden.
+  Nord and Monokai. The theme follows Total Commander's light or dark
+  mode: pick one light and one dark preset (Light and Dark by default),
+  and switching Total Commander switches between them. Any individual
+  color can be overridden.
 - **Fonts:** a standard Windows font picker for both the grid and the source
   view, remembered between sessions.
 - **Export / convert:** save the view (filtered rows in their sort
   order, visible columns in theirs), only the selected rows, a whole sheet
-  or table, or a query result as CSV, TSV or JSON, from any format. Excel
-  to CSV, DBF to CSV or JSON to CSV is one step.
+  or table, or a query result as CSV, TSV, JSON, HTML, Markdown or SQL
+  INSERTs, from any format. Excel to CSV, DBF to CSV or JSON to CSV is one
+  step. *Copy rows as* puts the same formats on the clipboard; HTML pastes
+  as a real table into Word or Outlook.
+- **Go to row:** <kbd>Ctrl+G</kbd> jumps to a row, a row and column, or a
+  percentage.
+- **Thumbnails and printing:** CSV, SQLite, DBF and Excel files show a
+  small table in Total Commander's thumbnail view, and Lister's Print
+  prints the view with the header on every page.
 - **Selection totals:** Count, Sum, Avg, Min and Max of the selected rows'
   current column, in the status bar.
 - **Large files:** loading runs in the background, and filtering stays
-  responsive well past a million rows. A database table bigger than what is
+  responsive well past a million rows; a long filter or sort stops as soon
+  as you type or click. A database table bigger than what is
   loaded is filtered and sorted as a whole.
 
 ## Supported files
