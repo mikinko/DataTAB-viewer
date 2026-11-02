@@ -3,6 +3,7 @@
 # DataTab
 
 ## News
+**2026-11-1 — DataTab 1.6: SPEED improvements**
 
 **2026-10-19 — DataTab 1.6: SQL over any table, remembered views, faster filters**
 
