@@ -3,6 +3,22 @@
 # DataTab
 
 ## News
+**2026-11-18 — DataTab 1.8**
+
+- **Excel `sep=;` files** open with the right delimiter, without the
+  `sep=` line in the table.
+- **`all-columns-max-width=1`** sizes every column to its widest value.
+- **Hand-edited ini is respected:** comments kept, UTF-8 BOM handled, no
+  rewrite when nothing changed.
+
+**2026-11-17 — DataTab 1.7**
+
+- **Sorting 2-3x faster** on big files.
+- **Smooth sideways scrolling:** column lines, header and filter boxes
+  stay in step.
+- **Decimal-comma numbers** (`2,75`) sort and filter as numbers; long
+  IDs keep every digit in SQL.
+
 **2026-11-1 — DataTab 1.6: SPEED improvements**
 
 **2026-10-19 — DataTab 1.6: SQL over any table, remembered views, faster filters**
@@ -33,9 +49,6 @@
   of CSV, SQLite, DBF and Excel files as a small table.
 - **Printing** from Lister's File › Print: the view as you see it, or
   only the selected rows, with the header on every page.
-- **Faster on big files.** Each character added to a filter re-tests only
-  the rows still showing, and a long filter or sort gives way as soon as
-  you type or click, so Total Commander does not freeze.
 
 Also: <kbd>Esc</kbd> closes Lister while a file is still loading;
 <kbd>PgUp</kbd> / <kbd>PgDn</kbd> / <kbd>Home</kbd> / <kbd>End</kbd> move
